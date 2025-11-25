@@ -52,6 +52,8 @@ export const publicRouter = createTRPCRouter({
             description: dc.dish.description,
             imageUrl: dc.dish.imageUrl,
             spiceLevel: dc.dish.spiceLevel,
+            price: dc.dish.price,
+            isVegetarian: dc.dish.isVegetarian,
             categories: dc.dish.categories.map((dcc) => ({
               id: dcc.category.id,
               name: dcc.category.name,

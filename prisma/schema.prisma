@@ -84,6 +84,8 @@ model Dish {
   description String
   imageUrl    String?
   spiceLevel  Int?
+  price       Float?
+  isVegetarian Boolean @default(true)
   restaurantId String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

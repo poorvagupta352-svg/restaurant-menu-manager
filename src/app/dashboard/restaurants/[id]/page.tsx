@@ -407,6 +407,8 @@ function DishForm({
     description: string;
     imageUrl: string | null;
     spiceLevel: number | null;
+    price: number | null;
+    isVegetarian: boolean;
     categories: Array<{ categoryId: string }>;
   };
   onSubmit: (data: {
@@ -414,6 +416,8 @@ function DishForm({
     description: string;
     imageUrl?: string;
     spiceLevel?: number;
+    price?: number;
+    isVegetarian?: boolean;
     categoryIds: string[];
   }) => void;
 }) {
@@ -422,6 +426,12 @@ function DishForm({
   const [imageUrl, setImageUrl] = useState(dish?.imageUrl || "");
   const [spiceLevel, setSpiceLevel] = useState<string>(
     dish?.spiceLevel?.toString() || "",
+  );
+  const [price, setPrice] = useState<string>(
+    dish?.price?.toString() || "",
+  );
+  const [isVegetarian, setIsVegetarian] = useState<boolean>(
+    dish?.isVegetarian ?? true,
   );
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     dish?.categories.map((c) => c.categoryId) || [],
@@ -440,6 +450,8 @@ function DishForm({
             description,
             imageUrl: imageUrl || undefined,
             spiceLevel: spiceLevel ? parseInt(spiceLevel) : undefined,
+            price: price ? parseFloat(price) : undefined,
+            isVegetarian,
             categoryIds: selectedCategories,
           });
         }}
@@ -485,6 +497,30 @@ function DishForm({
             onChange={(e) => setSpiceLevel(e.target.value)}
             placeholder="0"
           />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="price">Price (₹, optional)</Label>
+          <Input
+            id="price"
+            type="number"
+            min="0"
+            step="0.01"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="0.00"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="isVegetarian" className="flex items-center space-x-2">
+            <input
+              id="isVegetarian"
+              type="checkbox"
+              checked={isVegetarian}
+              onChange={(e) => setIsVegetarian(e.target.checked)}
+              className="h-4 w-4"
+            />
+            <span>Vegetarian</span>
+          </Label>
         </div>
         <div className="space-y-2">
           <Label>Categories (select multiple)</Label>

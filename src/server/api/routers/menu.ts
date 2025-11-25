@@ -118,6 +118,8 @@ export const menuRouter = createTRPCRouter({
         description: z.string().min(1),
         imageUrl: z.string().url().optional(),
         spiceLevel: z.number().min(0).max(5).optional(),
+        price: z.number().min(0).optional(),
+        isVegetarian: z.boolean().optional(),
         categoryIds: z.array(z.string()),
       }),
     )
@@ -158,6 +160,8 @@ export const menuRouter = createTRPCRouter({
           description: input.description,
           imageUrl: input.imageUrl,
           spiceLevel: input.spiceLevel,
+          price: input.price,
+          isVegetarian: input.isVegetarian ?? true,
           restaurantId: input.restaurantId,
           categories: {
             create: input.categoryIds.map((categoryId) => ({
@@ -217,6 +221,8 @@ export const menuRouter = createTRPCRouter({
         description: z.string().min(1).optional(),
         imageUrl: z.string().url().optional().nullable(),
         spiceLevel: z.number().min(0).max(5).optional().nullable(),
+        price: z.number().min(0).optional().nullable(),
+        isVegetarian: z.boolean().optional(),
         categoryIds: z.array(z.string()).optional(),
       }),
     )
@@ -238,6 +244,8 @@ export const menuRouter = createTRPCRouter({
         description?: string;
         imageUrl?: string | null;
         spiceLevel?: number | null;
+        price?: number | null;
+        isVegetarian?: boolean;
       } = {};
 
       if (input.name !== undefined) updateData.name = input.name;
@@ -245,6 +253,8 @@ export const menuRouter = createTRPCRouter({
         updateData.description = input.description;
       if (input.imageUrl !== undefined) updateData.imageUrl = input.imageUrl;
       if (input.spiceLevel !== undefined) updateData.spiceLevel = input.spiceLevel;
+      if (input.price !== undefined) updateData.price = input.price;
+      if (input.isVegetarian !== undefined) updateData.isVegetarian = input.isVegetarian;
 
       if (input.categoryIds !== undefined) {
         if (input.categoryIds.length > 0) {
