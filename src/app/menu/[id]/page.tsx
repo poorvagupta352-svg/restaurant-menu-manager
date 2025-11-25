@@ -82,6 +82,27 @@ export default function MenuPage({ params }: { params: { id: string } }) {
     (c) => c.id === selectedCategory,
   );
 
+  const SpiceIcon = ({ filled }: { filled: boolean }) => (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill={filled ? "#ef4444" : "none"}
+      stroke={filled ? "#dc2626" : "#d1d5db"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4"
+    >
+      <path d="M12 4c-1.5 0-2.5.5-3 2-.5 1.5-.5 3.5 0 5.5l1 7c.1 1 1 1.5 2 1.5h2c1 0 1.9-.5 2-1.5l1-7c.5-2 .5-4 0-5.5C14.5 4.5 13.5 4 12 4z" />
+      <path d="M12 4v1.5" strokeWidth="2" />
+      <path d="M11 4h2" strokeWidth="2" />
+      {filled && (
+        <ellipse cx="10.5" cy="9" rx="1" ry="1.5" fill="#ff8787" opacity="0.7" />
+      )}
+    </svg>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="sticky top-0 z-40 border-b bg-white shadow-sm">
@@ -165,25 +186,27 @@ export default function MenuPage({ params }: { params: { id: string } }) {
                         </div>
                       )}
                       <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <CardTitle className="text-xl">{dish.name}</CardTitle>
-                          {dish.spiceLevel !== null && dish.spiceLevel > 0 && (
+                      <div className="flex items-start justify-between">
+                        <CardTitle className="text-xl">{dish.name}</CardTitle>
+                        {(() => {
+                          const spiceLevel =
+                            dish.spiceLevel !== null && dish.spiceLevel !== undefined
+                              ? Number(dish.spiceLevel) : null;
+
+                          if (spiceLevel === null || isNaN(spiceLevel) || spiceLevel <= 0) {
+                            return null;
+                          }
+
+                          return (
                             <div className="flex items-center gap-1">
-                              {Array.from({ length: 5 }).map((_, i) => (
-                                <span
-                                  key={i}
-                                  className={`text-lg ${
-                                    i < dish.spiceLevel!
-                                      ? "text-red-500"
-                                      : "text-gray-300"
-                                  }`}
-                                >
-                                  🌶️
-                                </span>
-                              ))}
+                              {Array.from({ length: 5 }).map((_, i) => {
+                                const filled = i < spiceLevel;
+                                return <SpiceIcon key={i} filled={filled} />;
+                              })}
                             </div>
-                          )}
-                        </div>
+                          );
+                        })()}
+                      </div>
                         <CardDescription className="mt-2">
                           {dish.description}
                         </CardDescription>
