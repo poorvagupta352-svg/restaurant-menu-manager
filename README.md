@@ -72,7 +72,7 @@ A comprehensive Digital Menu Management System for restaurants built with the T3
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/poorvagupta352-svg/restaurant-menu-manager.git
 cd RestroMenu
 ```
 
