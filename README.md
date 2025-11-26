@@ -13,11 +13,6 @@ A comprehensive Digital Menu Management System for restaurants built with the T3
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Approach](#approach)
-- [Development Details](#development-details)
-- [Edge Cases Handled](#edge-cases-handled)
-- [Future Improvements](#future-improvements)
 
 ## ✨ Features
 
