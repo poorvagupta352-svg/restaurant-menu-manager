@@ -142,21 +142,11 @@ export default function MenuPage({ params }: { params: { id: string } }) {
             </span>
           </div>
 
-          {menuData.categories.length > 0 && (
-            <div className="mt-3 flex gap-1 overflow-x-auto">
-              {menuData.categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => scrollToCategory(category.id)}
-                  className={`whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    selectedCategory === category.id
-                      ? "bg-gray-800 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
+          {currentCategory && (
+            <div className="mt-3">
+              <h2 className="text-lg font-semibold text-gray-800">
+                {currentCategory.name}
+              </h2>
             </div>
           )}
         </div>
