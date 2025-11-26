@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import type { Dish } from "@prisma/client";
 
 export const publicRouter = createTRPCRouter({
   getRestaurantMenu: publicProcedure
@@ -46,19 +47,28 @@ export const publicRouter = createTRPCRouter({
         categories: restaurant.categories.map((category) => ({
           id: category.id,
           name: category.name,
-          dishes: category.dishes.map((dc) => ({
-            id: dc.dish.id,
-            name: dc.dish.name,
-            description: dc.dish.description,
-            imageUrl: dc.dish.imageUrl,
-            spiceLevel: dc.dish.spiceLevel,
-            price: dc.dish.price,
-            isVegetarian: dc.dish.isVegetarian,
-            categories: dc.dish.categories.map((dcc) => ({
-              id: dcc.category.id,
-              name: dcc.category.name,
-            })),
-          })),
+          dishes: category.dishes.map((dc) => {
+            const dish = dc.dish as unknown as Dish & {
+              price: number | null;
+              isVegetarian: boolean;
+              categories: Array<{
+                category: { id: string; name: string };
+              }>;
+            };
+            return {
+              id: dish.id,
+              name: dish.name,
+              description: dish.description,
+              imageUrl: dish.imageUrl,
+              spiceLevel: dish.spiceLevel,
+              price: dish.price ?? null,
+              isVegetarian: dish.isVegetarian ?? true,
+              categories: dish.categories.map((dcc) => ({
+                id: dcc.category.id,
+                name: dcc.category.name,
+              })),
+            };
+          }),
         })),
       };
 

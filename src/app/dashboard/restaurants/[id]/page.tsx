@@ -337,7 +337,22 @@ export default function RestaurantDetail({ params }: { params: { id: string } })
             <DishForm
               restaurantId={params.id}
               categories={restaurant.categories}
-              dish={restaurant.dishes.find((d) => d.id === editingDish)}
+              dish={(() => {
+                const foundDish = restaurant.dishes.find((d) => d.id === editingDish);
+                if (!foundDish) return undefined;
+                return {
+                  id: foundDish.id,
+                  name: foundDish.name,
+                  description: foundDish.description,
+                  imageUrl: foundDish.imageUrl,
+                  spiceLevel: foundDish.spiceLevel,
+                  price: (foundDish as any).price ?? null,
+                  isVegetarian: (foundDish as any).isVegetarian ?? true,
+                  categories: foundDish.categories.map((dc) => ({
+                    categoryId: dc.categoryId,
+                  })),
+                };
+              })()}
               onSubmit={(data) => {
                 updateDish.mutate({
                   id: editingDish,

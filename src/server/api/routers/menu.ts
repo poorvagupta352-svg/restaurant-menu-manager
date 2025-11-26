@@ -154,21 +154,41 @@ export const menuRouter = createTRPCRouter({
         }
       }
 
-      const dish = await ctx.db.dish.create({
-        data: {
-          name: input.name,
-          description: input.description,
-          imageUrl: input.imageUrl,
-          spiceLevel: input.spiceLevel,
-          price: input.price,
-          isVegetarian: input.isVegetarian ?? true,
-          restaurantId: input.restaurantId,
-          categories: {
-            create: input.categoryIds.map((categoryId) => ({
-              categoryId,
-            })),
-          },
+      const dishData: {
+        name: string;
+        description: string;
+        imageUrl?: string;
+        spiceLevel?: number;
+        price?: number;
+        isVegetarian: boolean;
+        restaurantId: string;
+        categories: {
+          create: Array<{ categoryId: string }>;
+        };
+      } = {
+        name: input.name,
+        description: input.description,
+        isVegetarian: input.isVegetarian ?? true,
+        restaurantId: input.restaurantId,
+        categories: {
+          create: input.categoryIds.map((categoryId) => ({
+            categoryId,
+          })),
         },
+      };
+
+      if (input.imageUrl !== undefined) {
+        dishData.imageUrl = input.imageUrl;
+      }
+      if (input.spiceLevel !== undefined) {
+        dishData.spiceLevel = input.spiceLevel;
+      }
+      if (input.price !== undefined) {
+        dishData.price = input.price;
+      }
+
+      const dish = await ctx.db.dish.create({
+        data: dishData,
         include: {
           categories: {
             include: {
