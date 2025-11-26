@@ -14,18 +14,15 @@ export function getSessionToken(): string {
 }
 
 export async function copyToClipboard(text: string): Promise<boolean> {
-  // Check if clipboard API is available
   if (typeof window !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
     try {
       await navigator.clipboard.writeText(text);
       return true;
     } catch (err) {
       console.error("Failed to copy using clipboard API:", err);
-      // Fall through to fallback method
     }
   }
 
-  // Fallback method for browsers that don't support clipboard API
   try {
     const textArea = document.createElement("textarea");
     textArea.value = text;
@@ -45,4 +42,3 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     return false;
   }
 }
-

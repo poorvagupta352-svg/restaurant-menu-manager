@@ -32,7 +32,7 @@ export async function sendVerificationCode(
   
   if (!emailTransporter) {
     console.log(`[EMAIL DISABLED] Verification code for ${email}: ${code}`);
-    return true; // Return true in development when email is not configured
+    return true;
   }
 
   try {
@@ -58,4 +58,3 @@ export async function sendVerificationCode(
     return false;
   }
 }
-

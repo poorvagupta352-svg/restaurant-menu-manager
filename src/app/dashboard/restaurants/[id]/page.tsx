@@ -11,7 +11,6 @@ import Link from "next/link";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import Image from "next/image";
 import { copyToClipboard } from "~/lib/utils";
 
@@ -581,4 +580,3 @@ function QRCodeDisplay({ url }: { url: string }) {
 
   return <img src={qrCodeUrl} alt="QR Code" className="w-64 h-64" />;
 }
-
