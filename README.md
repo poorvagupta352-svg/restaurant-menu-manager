@@ -4,7 +4,7 @@ A comprehensive Digital Menu Management System for restaurants built with the T3
 
 ## 🚀 Live Demo
 
-**Vercel Deployment Link:** https://restaurant-menu-manager-59zhj3lnu-poorva-guptas-projects.vercel.app/
+**Vercel Deployment Link:** https://restaurant-menu-manager-five.vercel.app/
 
 
 ## ✨ Features
